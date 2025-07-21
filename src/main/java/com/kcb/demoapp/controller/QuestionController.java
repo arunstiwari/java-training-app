@@ -1,5 +1,6 @@
 package com.kcb.demoapp.controller;
 
+import com.kcb.demoapp.model.Complexity;
 import com.kcb.demoapp.model.Question;
 import com.kcb.demoapp.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class QuestionController {
     public ResponseEntity<List<Question>> searchQuestions(
             @RequestParam(required = false) String category,
             @RequestParam(required = false) List<String> tags,
-            @RequestParam(required = false) String complexity,
+            @RequestParam(required = false) Complexity complexity,
             @RequestParam(required = false) String questionType
     ) {
         List<Question> savedQuestions = questionRepository.search(category, tags, complexity, questionType);

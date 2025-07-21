@@ -20,7 +20,7 @@ public class QuizControllerTest {
 
     @Test
     void should_CreateQuizQuestion() throws Exception {
-        String questionJson = "{\"questionId\":\"QUES-1\",\"questionText\":[\"Dummy Question\"],\"options\":[{\"choiceText\":\"t\",\"isCorrect\":1},{\"choiceText\":\"c\",\"isCorrect\":0},{\"choiceText\":\"b\",\"isCorrect\":0},{\"choiceText\":\"a\",\"isCorrect\":0}],\"correctAnswer\":\"t\",\"category\":\"Dummy\",\"tags\":[\"dummy\",\"vedantu\"],\"explanation\":[\"dummy question\"],\"references\":[\"http://www.example.com\"],\"questionImage\":\"\",\"questionVideo\":\"\",\"questionAudio\":\"\",\"questionType\":\"multiple_choice\",\"complexity\":\"easy\"}";
+        String questionJson = "{\"questionId\":\"QUES-1\",\"questionText\":[\"Dummy Question\"],\"options\":[{\"choiceText\":\"t\",\"isCorrect\":1},{\"choiceText\":\"c\",\"isCorrect\":0},{\"choiceText\":\"b\",\"isCorrect\":0},{\"choiceText\":\"a\",\"isCorrect\":0}],\"correctAnswer\":\"t\",\"category\":\"Dummy\",\"tags\":[\"dummy\",\"vedantu\"],\"explanation\":[\"dummy question\"],\"references\":[\"http://www.example.com\"],\"questionImage\":\"\",\"questionVideo\":\"\",\"questionAudio\":\"\",\"questionType\":\"multiple_choice\",\"complexity\":\"EASY\"}";
         mockMvc.perform(post("/questions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(questionJson))
@@ -38,9 +38,16 @@ public class QuizControllerTest {
     void shouldSearchQuestionsByCategoryAndComplexity() throws Exception {
         mockMvc.perform(get("/questions/search")
                         .param("category", "Dummy")
-                        .param("complexity", "easy"))
+                        .param("complexity", "EASY"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void shouldReturnBadRequestForInvalidComplexity() throws Exception {
+        mockMvc.perform(get("/questions/search")
+                        .param("complexity", "invalid"))
+                .andExpect(status().isBadRequest());
     }
 
 }

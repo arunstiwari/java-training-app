@@ -31,5 +31,6 @@ public class Question {
     private String questionVideo;
     private String questionAudio;
     private String questionType;
-    private String complexity;
+    @Enumerated(EnumType.STRING)
+    private Complexity complexity;
 }
