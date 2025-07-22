@@ -23,3 +23,12 @@ jobs:
 
             - name: Unit Test
               run: mvn test
+
+            - name: Install git-secrets
+              run: |
+                 git clone https://github.com/awslabs/git-secrets.git
+                 cd git-secrets && sudo make install
+                 cd ..
+            - name: Scan for secrets
+              run: git secrets --scan -r
+
